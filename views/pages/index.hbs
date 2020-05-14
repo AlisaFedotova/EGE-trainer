@@ -1,1 +1,12 @@
 <h2> Index page </h2>
+{{#if COneTasks.length}}
+    <div>
+        {{#each COneTasks}}
+            <p>
+                <span>{{title}}</span>
+            </p>
+        {{/each}}
+    </div>
+{{else}}
+    <p>Нет доступных задач</p>
+{{/if}}
