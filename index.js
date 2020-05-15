@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 const exphbs = require('express-handlebars');
 const PORT = process.env.PORT || 3000;
 const testRoutes = require('./routes/router');
@@ -15,6 +16,7 @@ app.set('view engine', 'hbs'); //делаем hbs движком по умолч
 app.set('views', 'views');   //регистрируем папку, где по умолчанию будут храниться все вьюшки
 
 app.use(express.urlencoded({extended: true}));   //чтобы express мог парсить body
+app.use(express.static(path.join(__dirname, 'public/styles/css')));  //указываем, где лежат статические файлы (напр. стили)
 
 app.use(testRoutes);
 
