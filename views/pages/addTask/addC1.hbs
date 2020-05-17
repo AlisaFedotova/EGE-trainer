@@ -1,10 +1,75 @@
-<h2>Добавить задание С1</h2>
+<h2>Добавить задание</h2>
 
 <form action="addC1" method="post">
+    <!--    <div class="input-field col s12" >-->
+    <!--        <select name="title">-->
+    <!--            <option value="" disabled selected></option>-->
+    <!--            <option value="1">24</option>-->
+    <!--            <option value="2">25</option>-->
+    <!--            <option value="3">27</option>-->
+    <!--        </select>-->
+    <!--        <label>Выберите тип задания</label>-->
+    <!--    </div>-->
     <div class="input-field">
         <input type="text" name="title">
         <label>Task title</label>
     </div>
+    <div>
+        <p>Введите текст условия задачи:</p>
+        <textarea name="text"></textarea>
+        <label>Введите...</label>
+    </div>
+    <div class="input-field">
+        <input type="text" name="codeLanguage">
+        <label>Язык программирования</label>
+    </div>
+    <div>
+        <p>Введите код задачи:</p>
+        <textarea name="codeRow"></textarea>
+        <label>Введите...</label>
+    </div>
+    <div>
+        <p>Введите текст подзадач:</p>
+        <textarea name="innerTask"></textarea>
+        <label>Введите...</label>
+    </div>
+    <p>Введите ответы на подзадачи</p>
+    <ol>
+        <li>
+            <div class="input-field col s2">
+                <input type="text" name="innerTaskAnswer1">
+            </div>
+        </li>
+        <li>
+            <div class="input-field col s2">
+                <input type="text" name="innerTaskAnswer2">
+            </div>
+        </li>
+        <li>
+            <div class="row">
+                <div class="input-field col s4">
+                    <input type="text" name="answer311">
+                    <label>Ошибка</label>
+                </div>
+                <p class="col s2">заменить на</p>
+                <div class="input-field col s4">
+                    <input type="text" name="answer312">
+                    <label>Правильный вариант</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s4">
+                    <input type="text" name="321">
+                    <label>Ошибка</label>
+                </div>
+                <p class="col s2">заменить на</p>
+                <div class="input-field col s4">
+                    <input type="text" name="322">
+                    <label>Правильный вариант</label>
+                </div>
+            </div>
+        </li>
+    </ol>
     <button type="submit" class="btn">
         Добавить
     </button>

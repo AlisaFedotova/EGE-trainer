@@ -16,7 +16,7 @@ app.set('view engine', 'hbs'); //делаем hbs движком по умолч
 app.set('views', 'views');   //регистрируем папку, где по умолчанию будут храниться все вьюшки
 
 app.use(express.urlencoded({extended: true}));   //чтобы express мог парсить body
-app.use(express.static(path.join(__dirname, 'public/styles/css')));  //указываем, где лежат статические файлы (напр. стили)
+app.use(express.static(path.join(__dirname, 'public')));  //указываем, где лежат статические файлы (напр. стили)
 
 app.use(testRoutes);
 
