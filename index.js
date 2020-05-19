@@ -22,10 +22,12 @@ app.use(testRoutes);
 
 async function start() {
     try {
-        await mongoose.connect('mongodb+srv://alicinia:ufhhbgjnnth@cluster0-xlimj.mongodb.net/Task-DB', {    //подключение бд
-            useNewUrlParser: true,
-            useFindAndModify: false
-        });
+        await mongoose.connect('mongodb+srv://alicinia:ufhhbgjnnth@cluster0-xlimj.mongodb.net/Task-DB',
+            {    //подключение бд
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+                useFindAndModify: false
+            });
         app.listen(PORT, () => {
             console.log('Server has been started...');
         });

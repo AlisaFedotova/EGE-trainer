@@ -1,19 +1,17 @@
 const {Schema, model} = require('mongoose');
 
-const Task24Schema = new Schema({
+const task24 = new Schema({
     title: {
         type: String,
-        validate: {
-            validator: function (text) {
-                return text.indexOf('https://twitter.com/') === 0;
-            },
-            message: 'Twitter handle must start with https://twitter.com/'
-        }
+        // validate: {
+        //     validator: function (text) {
+        //         return 0;
+        //     }
+        // }
     },
-    text: String,
+    taskText: String,
     code: {
-        required: true,
-        codeRow: [String]
+        codeRow: String
     },
     innerTask: String,
     answers: {
@@ -27,8 +25,12 @@ const Task24Schema = new Schema({
     created: {
         type: Date,
         default: new Date
+    },
+    completed: {
+        type: Boolean,
+        default: false
     }
 });
 
 
-module.exports = model('task', Task24Schema);
+module.exports = model('task', task24);
