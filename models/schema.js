@@ -2,13 +2,14 @@ const {Schema, model} = require('mongoose');
 
 const task24 = new Schema({
     title: {
-        type: String,
+        type: Number,
         // validate: {
         //     validator: function (text) {
         //         return 0;
         //     }
         // }
     },
+    taskType: Number,
     taskText: String,
     code: {
         codeRow: String

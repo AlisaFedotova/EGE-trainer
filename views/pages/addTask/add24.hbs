@@ -1,10 +1,16 @@
-<h2>Добавить задание</h2>
+<h2>Добавить задание типа 24</h2>
 
-<form action="addC1" method="post">
-    <div class="input-field">
-        <input type="text" name="title">
-        <label>Номер задания</label>
+<form action="add24" method="post">
+    <div class="input-field col s12">
+        <select name="taskType">
+            <option value="" disabled selected>Выберете тип задания</option>
+            <option value="1">Работа с цифрами числа</option>
+            <option value="2">Работа с числами без массива</option>
+            <option value="3">Степень числа</option>
+        </select>
+        <label></label>
     </div>
+    <input hidden name="title" value="24">
     <div>
         <p>Введите текст условия задачи:</p>
         <textarea name="taskText"></textarea>
@@ -39,23 +45,23 @@
         <li>
             <div class="row">
                 <div class="input-field col s4">
-                    <input type="text" name="answer311">
+                    <input type="text" name="a">
                     <label>Ошибка</label>
                 </div>
                 <p class="col s2">заменить на</p>
                 <div class="input-field col s4">
-                    <input type="text" name="answer312">
+                    <input type="text" name="a">
                     <label>Правильный вариант</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s4">
-                    <input type="text" name="answer321">
+                    <input type="text" name="b">
                     <label>Ошибка</label>
                 </div>
                 <p class="col s2">заменить на</p>
                 <div class="input-field col s4">
-                    <input type="text" name="answer322">
+                    <input type="text" name="b">
                     <label>Правильный вариант</label>
                 </div>
             </div>

@@ -1,13 +1,13 @@
 <h2>Список заданий</h2>
-{{#if COneTasks.length}}
+{{#if tasks.length}}
     <div>
-        {{#each COneTasks}}
+        {{#each tasks}}
             <p>
             <form action="/complete" method="post">
                 <label>
                     <input type="checkbox" {{#if completed}}checked{{/if}} name="completed">
                     <span>{{title}}</span>
-                </label>
+                </label> <label>{{taskType}}</label>
                 <input type="hidden" value="{{_id}}" name="id"/>
                 <button class="btn" type="submit">Save</button>
             </form>
@@ -25,7 +25,7 @@
                 <p>{{innerTask}}</p>
             </div>
             <div>
-                <h5>Введите ответы:</h5>
+                <h5>Ответ:</h5>
                 {{#with answers}}
                     <ol>
                         <li><p>{{innerTaskAnswer1}}</p></li>

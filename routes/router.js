@@ -3,42 +3,57 @@ const Task = require('../models/schema');
 const router = Router();
 
 router.get('/', async (req, res) => {
-    const COneTasks = await Task.find({}).lean(); //получить все таски, которые есть
+    const tasks = await Task.find({}).lean(); //получить все таски, которые есть
     res.render('pages/index', {
-        title: 'Тренер ЕГЭ',
+        title: 'Список задач',
         isIndex: true,
-        COneTasks,   //передаем массив задач как параметр
+        tasks,   //передаем массив задач как параметр
     });
 });
 
-router.get('/create', (req, res) => {
-    res.render('pages/create', {
-        title: 'Create page'
-    });
-});
-
-router.get('/addC1', (req, res) => {
-    res.render('pages/addTask/addC1', {
-        title: 'Тренер ЕГЭ',
+router.get('/add24', (req, res) => {
+    res.render('pages/addTask/add24', {
+        title: 'Добавить задание типа 25',
         isAddTask: true,
     });
 });
 
-router.get('/addC2', (req, res) => {
-    res.render('pages/addTask/addC2', {
-        title: 'Добавить задание C2'
+router.get('/add25', (req, res) => {
+    res.render('pages/addTask/add25', {
+        title: 'Добавить задание типа 25'
     });
 });
 
-router.get('/addC4', (req, res) => {
-    res.render('pages/addTask/addC4', {
-        title: 'Добавить задание C4'
+router.get('/add27', (req, res) => {
+    res.render('pages/addTask/add27', {
+        title: 'Добавить задание типа 27'
     });
 });
-router.post('/addC1', async (req, res) => { //добавляем новую задачу в базу
+
+router.get('/training', async (req, res) => {
+    const trainTask = await Task.find({}).lean(); //получить все таски, которые есть
+    res.render('pages/training', {
+        title: 'Тренировка',
+        isTraining: true,
+        trainTask
+    });
+});
+router.post('/check', async (req, res) => {
+    const task = await Task.findById(req.body.id);
+    let Task1Answ = req.body.innerTaskAnswer1,
+        Task2Answ = req.body.innerTaskAnswer1,
+        Task3Answ = req.body.innerTaskAnswer1;
+    console.log('Task1Answ',Task1Answ, 'type:',typeof Task1Answ);
+    console.log('task.innerTaskAnswer1',task.answers.innerTaskAnswer1, 'type:',typeof task.answers.innerTaskAnswer1);
+    if (Task1Answ === task.answers.innerTaskAnswer1) {
+        console.log(true);
+    }
+});
+router.post('/add24', async (req, res) => { //добавляем новую задачу в базу
     console.log('request:', req.body);
     const task = new Task({ //создаем модель задачи
         title: req.body.title,
+        taskType: req.body.taskType,
         taskText: req.body.taskText,
         code: {
             codeRow: req.body.codeRow
@@ -48,8 +63,8 @@ router.post('/addC1', async (req, res) => { //добавляем новую за
             innerTaskAnswer1: req.body.innerTaskAnswer1,
             innerTaskAnswer2: req.body.innerTaskAnswer2,
             innerTaskAnswer3: {
-                a: [req.body.answer311, req.body.answer312],
-                b: [req.body.answer321, req.body.answer322]
+                a: req.body.a,
+                b: req.body.b
             }
         },
     });

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const exphbs = require('express-handlebars');
 const PORT = process.env.PORT || 3000;
-const testRoutes = require('./routes/router');
+const testRoutes = require('../routes/router');
 
 const app = express();
 const hbs = exphbs.create({
@@ -17,7 +17,6 @@ app.set('views', 'views');   //регистрируем папку, где по 
 
 app.use(express.urlencoded({extended: true}));   //чтобы express мог парсить body
 app.use(express.static(path.join(__dirname, 'public')));  //указываем, где лежат статические файлы (напр. стили)
-
 app.use(testRoutes);
 
 async function start() {
