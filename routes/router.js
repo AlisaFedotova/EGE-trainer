@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const Task = require('../models/schema');
 const router = Router();
+const help = require('./back-helper');
 
 router.get('/', async (req, res) => {
     const tasks = await Task.find({}).lean(); //получить все таски, которые есть
@@ -41,12 +42,50 @@ router.get('/training', async (req, res) => {
 router.post('/check', async (req, res) => {
     const task = await Task.findById(req.body.id);
     let Task1Answ = req.body.innerTaskAnswer1,
-        Task2Answ = req.body.innerTaskAnswer1,
-        Task3Answ = req.body.innerTaskAnswer1;
-    console.log('Task1Answ',Task1Answ, 'type:',typeof Task1Answ);
-    console.log('task.innerTaskAnswer1',task.answers.innerTaskAnswer1, 'type:',typeof task.answers.innerTaskAnswer1);
-    if (Task1Answ === task.answers.innerTaskAnswer1) {
-        console.log(true);
+        Task2Answ = req.body.innerTaskAnswer2,
+        Task3aAnsw = req.body.a,
+        Task3bAnsw = req.body.b,
+        corrAnswCount = 0,
+        mark = 0;
+    if (help.isCorrectAnswer(Task1Answ, task.answers.innerTaskAnswer1)) {
+        corrAnswCount++;
+        console.log('first correct');
+    } else {
+        console.log('first wrong');
+    }
+    if (help.isCorrectAnswer(Task2Answ, task.answers.innerTaskAnswer2)) {
+        corrAnswCount++;
+        console.log('second correct');
+    } else {
+        console.log('second wrong');
+    }
+
+    if (help.isCorrectAnswer(Task3aAnsw.join(' '), task.answers.innerTaskAnswer3.a.join(' '))) {
+        corrAnswCount++;
+        console.log('3a correct');
+    } else {
+        console.log('3a wrong');
+    }
+    if (help.isCorrectAnswer(Task3bAnsw.join(' '), task.answers.innerTaskAnswer3.b.join(' '))) {
+        corrAnswCount++;
+        console.log('3b correct');
+    } else {
+        console.log('3b wrong');
+    }
+    console.log('correct answers count:', corrAnswCount);
+    switch (corrAnswCount) {
+        case 2:
+            await res.json({mark: 1});
+            break;
+        case 3:
+            await res.json({mark: 2});
+            break;
+        case 4:
+            await res.json({mark: 3});
+            break;
+        default:
+            await res.json({mark: 0});
+
     }
 });
 router.post('/add24', async (req, res) => { //добавляем новую задачу в базу
@@ -66,6 +105,7 @@ router.post('/add24', async (req, res) => { //добавляем новую за
                 a: req.body.a,
                 b: req.body.b
             }
+
         },
     });
     await task.save();  //сохраняем задачу в бд
