@@ -1,7 +1,120 @@
+$col-red: #D9341E;
+$col-blue: #095CD9;
+$col-dark-blue: #14448C;
+$col-green: #ADD91E;
+$col-dark-green: #6E8C0D;
+$color: rgba(0, 0, 0, 0.87);
+
 body {
-  background-color: #eeeeee;
+  background: linear-gradient(0deg, rgba(173, 217, 30, 1) 0%, rgba(238, 238, 238, 1) 100%);
+  min-height: 100vh;
 }
 
 select {
   display: block;
+}
+
+.container {
+  padding: 1rem 2rem;
+  box-shadow: 0 0 4px 0 #b9b6b6;
+}
+
+nav {
+  border-bottom: 4px solid $col-blue;
+  box-shadow: none
+}
+
+.btn {
+  background: linear-gradient(30deg, rgba(110, 140, 13, 13) 0%, rgba(173, 217, 30, 1) 100%);
+
+  &:active {
+    background: linear-gradient(30deg, rgba(173, 217, 30, 1) 100%, rgba(110, 140, 13, 13) 0%);
+  }
+
+  &.round {
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 2rem;
+    padding: 0;
+    line-height: 25px;
+  }
+
+  &.special {
+    margin-top: -1.3rem;
+    margin-left: 1rem;
+  }
+}
+
+textarea {
+  height: 10rem;
+  position: relative;
+}
+
+select, textarea, input {
+  border: 1px solid rgb(158, 158, 158) !important;
+  background-color: #f8f8f8 !important;
+  border-radius: 5px !important;
+}
+
+input {
+  height: 2rem !important;
+}
+
+.input-field {
+  margin-top: 0;
+  margin-bottom: 1rem;
+
+  &.wrong input {
+    border-color: $col-red !important;
+  }
+
+  &.col {
+    ~ p {
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      left: 1rem !important;
+      top: -.5rem !important;
+    }
+  }
+}
+
+.brand-logo {
+  padding: 0 0.6rem !important;
+}
+
+.t-block {
+  margin-bottom: 2rem;
+  background-color: #f5f4f4;
+  border-radius: 5px;
+  border: 1px solid $col-green;
+  padding: 0 1rem 10px;
+
+  h3 {
+    border-bottom: 1px solid #d5d4db;
+  }
+}
+
+.f-block {
+  padding: 0 1rem;
+  margin-bottom: 2rem;
+}
+
+.login {
+  position: absolute;
+  height: 1rem;
+  padding-left: 17rem;
+
+  span {
+    color: $col-green;
+  }
+}
+
+.task-area {
+  color: $color;
+  border: 0 !important;
+  background: transparent !important;
 }

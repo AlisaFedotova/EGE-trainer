@@ -2,75 +2,95 @@
 {{#if trainTask.length}}
     <div>
         {{#each trainTask}}
-            <p>
-            <form action="/check" method="post">
-                <label>
-                    <input type="checkbox" {{#if completed}}checked{{/if}} name="completed">
-                    <span>{{title}}</span>
-                </label> <label>{{taskType}}</label>
-                <input type="hidden" value="{{_id}}" name="id"/>
-                <button class="btn" type="submit">Save</button>
-            </form>
-            </p>
-            <div>
-                <h5>Текст задания:</h5>
-                <p>{{taskText}}</p>
-            </div>
-            <div>
-                <h5>Код:</h5>
-                <p>{{code.codeRow}}</p>
-            </div>
-            <div>
-                <h5>Последовательно выполните следующее:</h5>
-                <p>{{innerTask}}</p>
-            </div>
-            <form action="check" method="post">
+            <div class="t-block">
                 <div>
-                    <h5>Введите ответы на подзадачи:</h5>
-                    {{#with answers}}
-                        <ol>
-                            <li>
-                                <div class="input-field col s2">
-                                    <input type="text" name="innerTaskAnswer1">
-                                </div>
-                            </li>
-                            <li>
-                                <div class="input-field col s2">
-                                    <input type="text" name="innerTaskAnswer2">
-                                </div>
-                            </li>
-                            <li>
-                                <div class="row">
-                                    <div class="input-field col s4">
-                                        <input type="text" name="a">
-                                        <label>Ошибка</label>
-                                    </div>
-                                    <p class="col s2">заменить на</p>
-                                    <div class="input-field col s4">
-                                        <input type="text" name="a">
-                                        <label>Правильный вариант</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s4">
-                                        <input type="text" name="b">
-                                        <label>Ошибка</label>
-                                    </div>
-                                    <p class="col s2">заменить на</p>
-                                    <div class="input-field col s4">
-                                        <input type="text" name="b">
-                                        <label>Правильный вариант</label>
-                                    </div>
-                                </div>
-                            </li>
-                        </ol>
-                    {{/with}}
-                    <input name="id" value="{{_id}}" hidden>
-                    <button type="submit" class="btn">
-                        Проверить
-                    </button>
+                    <p>
+                    <form action="/check" method="post">
+                        <h3>
+                            <!--                        <label>-->
+                            <!--                        <input type="checkbox" {{#if
+                                    completed}}checked{{/if}} name="completed">-->
+                            <span>{{title}}</span>
+                            <!--                        </label> -->
+                            <!--                        <label>{{taskType}}</label>-->
+                            <label>Работа с цифрами числа</label>
+                            <input type="hidden" value="{{_id}}" name="id"/>
+                            <!--                    <button class="btn" type="submit">Save</button>-->
+                        </h3>
+                    </form>
+                    </p>
+                    <div>
+                        <h5>Текст задания:</h5>
+                        <p>{{taskText}}</p>
+                    </div>
+                    <div>
+                        <h5>Код:</h5>
+                        <textarea disabled>
+                            {{#each code.codeRow}}
+                                {{~@index}}:     {{this~}}
+                            {{else}}
+                                Код отсутствует.
+                            {{/each}}
+                        </textarea>
+                    </div>
+
+                    <div>
+                        <h5>Последовательно выполните следующее:</h5>
+                        <p>{{innerTask}}</p>
+                    </div>
+                    <form action="check" method="post">
+                        <div>
+                            <h5>Введите ответы на подзадачи:</h5>
+                            {{#with answers}}
+                                <ol>
+                                    <li>
+                                        <div class="input-field col s2">
+                                            <input type="text" name="innerTaskAnswer1">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="input-field col s2 ">
+                                            <input type="text" name="innerTaskAnswer2">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row">
+                                            <div class="input-field col s4">
+                                                <input type="text" name="a">
+                                                <label>Ошибка</label>
+                                            </div>
+                                            <p class="col s2">заменить на</p>
+                                            <div class="input-field col s4">
+                                                <input type="text" name="a">
+                                                <label>Правильный вариант</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s4 ">
+                                                <input type="text" name="b">
+                                                <label>Ошибка</label>
+                                            </div>
+                                            <p class="col s2">заменить на</p>
+                                            <div class="input-field col s4 ">
+                                                <input type="text" name="b">
+                                                <label>Правильный вариант</label>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ol>
+                            {{/with}}
+                            <input name="id" value="{{_id}}" hidden>
+                            <button type="submit" class="btn">
+                                Проверить
+                            </button>
+<!--                            <div class="test-result">-->
+<!--                                <p>Заданий решено верно: 2</p>-->
+<!--                                <p>Баллов получено: 1</p>-->
+<!--                            </div>-->
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         {{/each}}
     </div>
 {{else}}

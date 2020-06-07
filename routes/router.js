@@ -1,12 +1,27 @@
 const {Router} = require('express');
 const Task = require('../models/schema');
 const router = Router();
-const help = require('./back-helper');
+const help = require('./backend/index');
+const {cpp, python} = require('compile-run');
+
+(function () {
+    let childProcess = require("child_process");
+    let oldSpawn = childProcess.spawn;
+
+    function mySpawn() {
+        console.log('spawn called');
+        console.log(arguments);
+        let result = oldSpawn.apply(this, arguments);
+        return result;
+    }
+
+    childProcess.spawn = mySpawn;
+})();
 
 router.get('/', async (req, res) => {
     const tasks = await Task.find({}).lean(); //получить все таски, которые есть
     res.render('pages/index', {
-        title: 'Список задач',
+        title: 'Список заданий',
         isIndex: true,
         tasks,   //передаем массив задач как параметр
     });
@@ -14,7 +29,7 @@ router.get('/', async (req, res) => {
 
 router.get('/add24', (req, res) => {
     res.render('pages/addTask/add24', {
-        title: 'Добавить задание типа 25',
+        title: 'Добавить задание типа 24',
         isAddTask: true,
     });
 });
@@ -39,54 +54,18 @@ router.get('/training', async (req, res) => {
         trainTask
     });
 });
+
+router.get('/training-settings', async (req, res) => {
+    res.render('pages/training-settings', {
+        title: 'Настройка тренировки',
+        isTraining: true,
+    });
+});
 router.post('/check', async (req, res) => {
     const task = await Task.findById(req.body.id);
-    let Task1Answ = req.body.innerTaskAnswer1,
-        Task2Answ = req.body.innerTaskAnswer2,
-        Task3aAnsw = req.body.a,
-        Task3bAnsw = req.body.b,
-        corrAnswCount = 0,
-        mark = 0;
-    if (help.isCorrectAnswer(Task1Answ, task.answers.innerTaskAnswer1)) {
-        corrAnswCount++;
-        console.log('first correct');
-    } else {
-        console.log('first wrong');
-    }
-    if (help.isCorrectAnswer(Task2Answ, task.answers.innerTaskAnswer2)) {
-        corrAnswCount++;
-        console.log('second correct');
-    } else {
-        console.log('second wrong');
-    }
+    help.check24(req, task);
+    await res.json({mark: 0});
 
-    if (help.isCorrectAnswer(Task3aAnsw.join(' '), task.answers.innerTaskAnswer3.a.join(' '))) {
-        corrAnswCount++;
-        console.log('3a correct');
-    } else {
-        console.log('3a wrong');
-    }
-    if (help.isCorrectAnswer(Task3bAnsw.join(' '), task.answers.innerTaskAnswer3.b.join(' '))) {
-        corrAnswCount++;
-        console.log('3b correct');
-    } else {
-        console.log('3b wrong');
-    }
-    console.log('correct answers count:', corrAnswCount);
-    switch (corrAnswCount) {
-        case 2:
-            await res.json({mark: 1});
-            break;
-        case 3:
-            await res.json({mark: 2});
-            break;
-        case 4:
-            await res.json({mark: 3});
-            break;
-        default:
-            await res.json({mark: 0});
-
-    }
 });
 router.post('/add24', async (req, res) => { //добавляем новую задачу в базу
     console.log('request:', req.body);
@@ -95,7 +74,7 @@ router.post('/add24', async (req, res) => { //добавляем новую за
         taskType: req.body.taskType,
         taskText: req.body.taskText,
         code: {
-            codeRow: req.body.codeRow
+            codeRow: req.body.codeRow.split("\n")
         },
         innerTask: req.body.innerTask,
         answers: {

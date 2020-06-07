@@ -1,10 +1,14 @@
-<nav class="blue darken-4">
+<nav class="grey darken-3">
     <div class="nav-wrapper">
         <a href="/" class="brand-logo">{{title}}</a>
+<!--        <p class="login">Вы вошли как: <span>Fedotova &#127891;</span></p>-->
+<!--        <p class="login">Вы вошли как: <span>Ivanov</span></p>-->
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li  {{#if isIndex}}class="active"{{/if}}><a href="/">Все задания</a></li>
             <li  {{#if isAddTask}}class="active"{{/if}}><a href="add24">Добавить +</a></li>
+            <li  {{#if isAddTask}}class="active"{{/if}}><a href="add24">Меню &#9660;</a></li>
             <li  {{#if isTraining}}class="active"{{/if}}><a href="training">Тренировка</a></li>
+            <li><a href="training">История</a></li>
         </ul>
     </div>
 </nav>

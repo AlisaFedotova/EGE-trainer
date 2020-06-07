@@ -1,9 +1,105 @@
 body {
-  background-color: #eeeeee;
+  background: linear-gradient(0deg, #add91e 0%, #eeeeee 100%);
+  min-height: 100vh;
 }
 
 select {
   display: block;
+}
+
+.container {
+  padding: 1rem 2rem;
+  box-shadow: 0 0 4px 0 #b9b6b6;
+}
+
+nav {
+  border-bottom: 4px solid #095CD9;
+  box-shadow: none;
+}
+
+.btn {
+  background: linear-gradient(30deg, #6e8c0d 0%, #add91e 100%);
+}
+.btn:active {
+  background: linear-gradient(30deg, #add91e 100%, #6e8c0d 0%);
+}
+.btn.round {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 2rem;
+  padding: 0;
+  line-height: 25px;
+}
+.btn.special {
+  margin-top: -1.3rem;
+  margin-left: 1rem;
+}
+
+textarea {
+  height: 10rem;
+  position: relative;
+}
+
+select, textarea, input {
+  border: 1px solid #9e9e9e !important;
+  background-color: #f8f8f8 !important;
+  border-radius: 5px !important;
+}
+
+input {
+  height: 2rem !important;
+}
+
+.input-field {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+.input-field.wrong input {
+  border-color: #D9341E !important;
+}
+.input-field.col ~ p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+.input-field.col label {
+  left: 1rem !important;
+  top: -0.5rem !important;
+}
+
+.brand-logo {
+  padding: 0 0.6rem !important;
+}
+
+.t-block {
+  margin-bottom: 2rem;
+  background-color: #f5f4f4;
+  border-radius: 5px;
+  border: 1px solid #ADD91E;
+  padding: 0 1rem 10px;
+}
+.t-block h3 {
+  border-bottom: 1px solid #d5d4db;
+}
+
+.f-block {
+  padding: 0 1rem;
+  margin-bottom: 2rem;
+}
+
+.login {
+  position: absolute;
+  height: 1rem;
+  padding-left: 17rem;
+}
+.login span {
+  color: #ADD91E;
+}
+
+.task-area {
+  color: rgba(0, 0, 0, 0.87);
+  border: 0 !important;
+  background: transparent !important;
 }
 
 /*# sourceMappingURL=index.css.map */

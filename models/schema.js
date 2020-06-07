@@ -12,7 +12,7 @@ const task24 = new Schema({
     taskType: Number,
     taskText: String,
     code: {
-        codeRow: String
+        codeRow: [String]
     },
     innerTask: String,
     answers: {
