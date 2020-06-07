@@ -24,18 +24,10 @@ exports.compileCode = async function (codeArray) {
         "cout << \"NO\" << endl;\n" +
         "return 0;\n" +
         "}";
-    // let http = new XMLHttpRequest();
-    // http.open("POST", "http://coliru.stacked-crooked.com/compile", false);
-    // console.log('[compileCode] send request');
-    // return new Promise((resolve, reject) => {
-    //     resolve(http.responseText);
-    //     http.send(JSON.stringify({"cmd": "g++ main.cpp && ./a.out", "src": jobj}));
-    //     console.log('[compileCode] response', http.response);
-    // });
-    // let request = postColiruRequest;
     console.log(jobj);
     let resp = await postColiruRequest(code);
     console.log('[compileCode] response', resp);
+    return resp;
 };
 
 postColiruRequest = async (code) => {

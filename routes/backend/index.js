@@ -52,45 +52,87 @@ function isCorrectAnswer(first, second) {
     return false;
 }
 
-exports.check24 = function (req, standardAnswer) {
-    let Task1Answ = req.body.innerTaskAnswer1,
-        Task2Answ = req.body.innerTaskAnswer2,
-        Task3aAnsw = req.body.a,
-        Task3bAnsw = req.body.b,
-        corrAnswCount = 0;
-
-    if (isCorrectAnswer(Task1Answ, standardAnswer.answers.innerTaskAnswer1)) {
-        corrAnswCount++;
-        console.log('[check24] first correct');
-    } else {
-        console.log('[check24] first wrong');
-    }
-    if (isCorrectAnswer(Task2Answ, standardAnswer.answers.innerTaskAnswer2)) {
-        corrAnswCount++;
-        console.log('[check24] second correct');
-    } else {
-        checkInnerTask2(standardAnswer, Task2Answ);
-        console.log('[check24] second wrong');
+class Task {
+    constructor(answer, userAnswers, m) {
+        this.answer = answer;
+        this.userAnswers = userAnswers;
+        this.m = m;
     }
 
-    if (isCorrectAnswer(Task3aAnsw.join(' '), standardAnswer.answers.innerTaskAnswer3.a.join(' '))) {
-        corrAnswCount++;
-        console.log('[check24] 3a correct');
-    } else {
-        console.log('[check24] 3a wrong');
-    }
-    if (isCorrectAnswer(Task3bAnsw.join(' '), standardAnswer.answers.innerTaskAnswer3.b.join(' '))) {
-        corrAnswCount++;
-        console.log('[check24] 3b correct');
-    } else {
-        console.log('[check24] 3b wrong');
+    check() {
+    };
+
+}
+
+exports.Task24 = class extends Task {
+    constructor(code, answer, userAnswers) {
+        super(answer, userAnswers);
+        this.code = code;
     }
 
-    console.log('[check24] correct answers count:', corrAnswCount);
-    return countCorrectAnswers(corrAnswCount);
+    check() {
+        let corrAnswCount = 0;
+        if (isCorrectAnswer(this.userAnswers.innerTaskAnswer1, this.answer.innerTaskAnswer1)) {
+            corrAnswCount++;
+            console.log('[Task24][check] first correct');
+        } else {
+            console.log('[Task24][check] first wrong');
+        }
+        if (isCorrectAnswer(this.userAnswers.innerTaskAnswer2, this.answer.innerTaskAnswer2)) {
+            corrAnswCount++;
+            console.log('[Task24][check] second correct');
+        } else {
+            if (this.isSecondTaskCorrect(this.answer.innerTaskAnswer3, this.userAnswers.innerTaskAnswer3, this.code)) {
+                corrAnswCount++;
+                console.log('[Task24][check] second correct');
+            } else {
+                console.log('[Task24][check] second wrong');
+            }
+        }
+
+        console.log('[Task24][check] correct answers count:', corrAnswCount);
+        return countTotalMark(corrAnswCount);
+    }
+
+    isSecondTaskCorrect(task, str, code) {
+        //код, две строки из правильного кода и то, куда их вставить
+        let wrongStr1 = task.a[0],
+            rightStr1 = task.a[1],
+            wrongStr2 = task.b[0],
+            rightStr2 = task.b[1],
+            N = str,
+            correctCode;
+        console.log('[isSecondTaskCorrect] task', task);
+        //составить верный код из исходного кода и двух правильных строк
+        console.log('[isSecondTaskCorrect] call composeCode');
+        // correctCode = composeCode(code, wrongStr1, rightStr1, wrongStr2, rightStr2); //правильный код
+        //вставить N, который задал пользователь, в правильный код
+        //TODO: вставить N в правильный код
+
+        //вставить N, который задал пользователь, в НЕправильный код
+        //TODO: вставить N в неправильный код
+
+        //отправить запрос с правильным кодом и N пользователя
+        // compileCode(correctCode)
+
+        //отправить запрос с изначальным кодом и N пользователя
+        console.log('[isSecondTaskCorrect] call compileCode');
+        // coliru.compileCode(code);
+        coliru.compileCode(code).then((a) => {
+            console.log(a);
+        }).catch((e) => {
+            console.log(e);
+        });
+
+        //обернуть всё в трай кетч
+        //обработать ответы
+        //сравнить ответы
+        //вернуть верно / неверно
+        return true;
+    }
 };
 
-function countCorrectAnswers(corrAnswCount) {
+function countTotalMark(corrAnswCount) {
     let mark;
     switch (corrAnswCount) {
         case 2:
@@ -105,50 +147,10 @@ function countCorrectAnswers(corrAnswCount) {
         default:
             mark = 0;
     }
-    console.log('[countCorrectAnswers] mark:', mark);
+    console.log('[countTotalMark] mark:', mark);
     return mark;
 }
 
-function checkInnerTask2(task, str) {
-    //код, две строки из правильного кода и то, куда их вставить
-    let wrongStr1 = task.answers.innerTaskAnswer3.a[0],
-        rightStr1 = task.answers.innerTaskAnswer3.a[1],
-        wrongStr2 = task.answers.innerTaskAnswer3.b[0],
-        rightStr2 = task.answers.innerTaskAnswer3.b[1],
-        code = task.code.codeRow,
-        N = str,
-        correctCode;
-    console.log('[checkInnerTask2] task', task);
-    //составить верный код из исходного кода и двух правильных строк
-    console.log('[checkInnerTask2] call composeCode');
-    // correctCode = composeCode(code, wrongStr1, rightStr1, wrongStr2, rightStr2); //правильный код
-    //вставить N, который задал пользователь, в правильный код
-    //TODO: вставить N в правильный код
-
-    //вставить N, который задал пользователь, в НЕправильный код
-    //TODO: вставить N в неправильный код
-
-    //отправить запрос с правильным кодом и N пользователя
-    // compileCode(correctCode)
-
-    //отправить запрос с изначальным кодом и N пользователя
-    console.log('[checkInnerTask2] call compileCode');
-    // coliru.compileCode(code);
-    coliru.compileCode(code)
-        // .then(function (response) {
-        //     console.log('Its OK', response);
-        // })
-        // .catch(function (errorText) {
-        //     console.log('Error:', errorText);
-        // });
-
-    //обернуть всё в трай кетч
-    //обработать ответы
-    //сравнить ответы
-    //вернуть верно / неверно
-
-
-}
 
 function composeCode(code, str1, newStr1, str2, newStr2) {
 

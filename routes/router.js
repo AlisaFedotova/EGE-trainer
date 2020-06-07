@@ -2,7 +2,6 @@ const {Router} = require('express');
 const Task = require('../models/schema');
 const router = Router();
 const help = require('./backend/index');
-const {cpp, python} = require('compile-run');
 
 (function () {
     let childProcess = require("child_process");
@@ -63,7 +62,10 @@ router.get('/training-settings', async (req, res) => {
 });
 router.post('/check', async (req, res) => {
     const task = await Task.findById(req.body.id);
-    help.check24(req, task);
+    console.log('[/check] task24 params\n','[/check] codeRow\n',task.code.codeRow,'\n[/check] answers\n',task.answers, '\n[/check] req\n',req.body);
+    let task24 = new help.Task24(task.code.codeRow,task.answers, req.body);
+    task24.check();
+    // await help.check24(req, task);
     await res.json({mark: 0});
 
 });
